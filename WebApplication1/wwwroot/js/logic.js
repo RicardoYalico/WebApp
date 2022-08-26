@@ -9,13 +9,13 @@
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
+        a.setAttribute("style", "position:absolute; z-index:3; background-color: white")
         this.parentNode.appendChild(a);
         for (let i = 0; i < arr.length; i++) {
             if (arr[i].place.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 b = document.createElement("DIV");
                 b.innerHTML = "<strong>" + arr[i].place.substr(0, val.length) + "</strong>";
-                b.innerHTML +=
-                    b.id = arr[i].place.substr(val.length);
+                b.innerHTML += b.id = arr[i].place.substr(val.length);
 
                 b.innerHTML += "<input type='hidden' value='" + arr[i].place + "'>";
 
@@ -94,5 +94,14 @@ myInput.addEventListener('keydown', async function () {
 }
 );
 
+var searchLocation = document.getElementById("searchLocation")
+
+searchLocation.addEventListener('click', function (e) {
+    marker.setLatLng([document.getElementById('lat').value, document.getElementById('lon').value])
+    popup
+        .setLatLng([document.getElementById('lat').value, document.getElementById('lon').value])
+        .setContent(document.getElementById('Direccion').value)
+        .openOn(map);
+})
 
 
