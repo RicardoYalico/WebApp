@@ -1,6 +1,8 @@
-﻿function autocomplete(inp, arr) {
+﻿// Funcion que que recibe la entrada de texto (input) y el array de datos 
+function autocomplete(inp, arr) {
     var currentFocus;
 
+    //Evento de sugerencias
     inp.addEventListener("input", function (e) {
         var a, b, val = this.value;
         closeAllLists();
@@ -31,34 +33,7 @@
         }
     });
 
-    inp.addEventListener("keydown", function (e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) {
-            currentFocus++;
-            addActive(x);
-        } else if (e.keyCode == 38) {
-            currentFocus--;
-            addActive(x);
-        } else if (e.keyCode == 13) {
-            e.preventDefault();
-            if (currentFocus > -1) {
-                if (x) x[currentFocus].click();
-            }
-        }
-    });
-    function addActive(x) {
-        if (!x) return false;
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-        x[currentFocus].classList.add("autocomplete-active");
-    }
-    function removeActive(x) {
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
-        }
-    }
+    //Cerrar las sugerencias
     function closeAllLists(elmnt) {
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++) {
@@ -67,6 +42,7 @@
             }
         }
     }
+    //Evento de respuesta ante una selección de sugerencia
     document.addEventListener("click", function (e) {
         closeAllLists(e.target);
     });
@@ -75,6 +51,7 @@
 var myInput = document.getElementById("Direccion")
 var locations = [];
 
+// API que nos proporciona un json de locacalización
 myInput.addEventListener('keydown', async function () {
 
     await axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${myInput.value}&apiKey=72a723001681496c8d25dcf9ac5dddd5`,
@@ -96,6 +73,7 @@ myInput.addEventListener('keydown', async function () {
 
 var searchLocation = document.getElementById("searchLocation")
 
+//Evento del envio de una sugerencia, se dibuja en el html
 searchLocation.addEventListener('click', function (e) {
     marker.setLatLng([document.getElementById('lat').value, document.getElementById('lon').value])
     popup
